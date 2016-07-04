@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/CRUx-BPHC/crux-node/issues"
   },
-  "homepage": "https://github.com/CRUx-BPHC/crux-node#readme"
+  "homepage": "https://github.com/CRUx-BPHC/crux-node#readme",
+  "dependencies": {
+    "poet": "^2.0.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-js-beautify": "^0.1.4",
+    "grunt-mocha-test": "^0.12.7",
+    "jslint": "^0.10.1",
+    "mocha": "^2.5.3"
+  }
 }
