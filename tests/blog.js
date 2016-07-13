@@ -1,6 +1,32 @@
 var supertest = require('supertest');
 var should = require("should");
 var request = supertest.agent("http://localhost:3000");
+var mongoose = require('mongoose');
+
+function prepareBattleGround() {
+  mongoose.connect('mongodb://localhost/crux', function (err) {
+    if (err) {
+      console.log('MongoDB: Connection Error', err);
+    }
+
+  });
+  var handles = require('./handles')({
+    collections: {
+      posts: "posts"
+    },
+    functions: {
+      authorEvaluator: function (author) {
+        return {
+          name: author,
+          id: "My Module Works"
+        };
+      }
+    }
+  });
+
+
+}
+
 
 describe('Blogging Module', function () {
   var server;
@@ -70,9 +96,9 @@ describe('Blogging Module', function () {
         done();
       });
   });
-    
-  it('should fetch post by url', function getPostByUrl(done){
-      request.get('/blog/posts/url/new-sample')
+
+  it('should fetch post by url', function getPostByUrl(done) {
+    request.get('/blog/posts/url/new-sample')
       .expect("Content-type", /json/)
       .expect(200)
       .end(function (err, res) {
@@ -80,9 +106,9 @@ describe('Blogging Module', function () {
         done();
       });
   });
-    
-  it('should fetch post by _id', function getPostById(done){
-      request.get('/blog/posts/id/'+post1._id)
+
+  it('should fetch post by _id', function getPostById(done) {
+    request.get('/blog/posts/id/' + post1._id)
       .expect("Content-type", /json/)
       .expect(200)
       .end(function (err, res) {
@@ -90,4 +116,5 @@ describe('Blogging Module', function () {
         done();
       });
   });
+
 });
