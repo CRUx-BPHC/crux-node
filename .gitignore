@@ -1,5 +1,6 @@
 #bot configuration file
 config.js*
+config.json*
 node_modules/*
 # Logs
 logs
