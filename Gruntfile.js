@@ -5,7 +5,7 @@ grunt.loadNpmTasks('grunt-mocha-test');
 grunt.loadNpmTasks('grunt-js-beautify');
 grunt.initConfig({
   jshint: {
-    all: ['Gruntfile.js', 'lib/**/*.js', 'app.js']
+    all: ['Gruntfile.js', 'lib/**/*.js', 'tests/**/*.js']
   },
   js_beautify: {
     options: {
@@ -52,5 +52,6 @@ grunt.registerTask('doc', 'generates static markdown documentation', function ()
 //    console.log('hello ' + name);
 //});
 
-//grunt.registerTask('default', ['jshint', 'mochaTest' ,'js_beautify:files:all']);
+//grunt.registerTask('default', ['jshint', 'mochaTest', 'js_beautify:files:all']);
 grunt.registerTask('default', ['jshint', 'js_beautify:files:all']);
+grunt.registerTask('test', ['mochaTest']);
