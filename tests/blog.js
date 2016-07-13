@@ -3,37 +3,17 @@ var should = require("should");
 var request = supertest.agent("http://localhost:3000");
 var mongoose = require('mongoose');
 
-function prepareBattleGround() {
-  mongoose.connect('mongodb://localhost/crux', function (err) {
-    if (err) {
-      console.log('MongoDB: Connection Error', err);
-    }
-
-  });
-  var handles = require('./handles')({
-    collections: {
-      posts: "posts"
-    },
-    functions: {
-      authorEvaluator: function (author) {
-        return {
-          name: author,
-          id: "My Module Works"
-        };
-      }
-    }
-  });
-
-
-}
-
-
 describe('Blogging Module', function () {
   var server;
+
   beforeEach(function () {
     var app = require('../lib/app.js');
     app.set('port', process.env.PORT || 3000);
     server = app.listen(app.get('port'));
+  });
+
+  afterEach(function () {
+    server.close();
   });
 
   var post1 = {
@@ -56,10 +36,6 @@ describe('Blogging Module', function () {
     viewer: "markdown"
   };
 
-  afterEach(function () {
-    server.close();
-  });
-
   it('should create new post', function createPost(done) {
     request.post('/blog/posts/create')
       .send(post1)
@@ -67,6 +43,7 @@ describe('Blogging Module', function () {
       .expect(200)
       .end(function (err, res) {
         res.status.should.equal(200);
+        res.body.message.should.equal("success");
         post1._id = res.body._id;
         done();
       });
@@ -92,6 +69,7 @@ describe('Blogging Module', function () {
       .expect(200)
       .end(function (err, res) {
         res.status.should.equal(200);
+        res.body.message.should.equal("success");
         post2._id = res.body._id;
         done();
       });
