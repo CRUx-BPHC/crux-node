@@ -1,6 +1,32 @@
 var supertest = require('supertest');
 var should = require("should");
 var request = supertest.agent("http://localhost:3000");
+var mongoose = require('mongoose');
+
+function prepareBattleGround() {
+  mongoose.connect('mongodb://localhost/crux', function (err) {
+    if (err) {
+      console.log('MongoDB: Connection Error', err);
+    }
+
+  });
+  var handles = require('./handles')({
+    collections: {
+      posts: "posts"
+    },
+    functions: {
+      authorEvaluator: function (author) {
+        return {
+          name: author,
+          id: "My Module Works"
+        };
+      }
+    }
+  });
+
+
+}
+
 
 describe('Blogging Module', function () {
   var server;
@@ -90,4 +116,5 @@ describe('Blogging Module', function () {
         done();
       });
   });
+
 });
